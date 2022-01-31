@@ -2,45 +2,49 @@ import React, { useState } from "react";
 
 function App() {
 
-  const [teljesNev, setTeljesnev] = useState({
+  const [adatok, steAdatok] = useState({
     vnev: "",
-    knev: ""
+    knev: "",
+    email:""
   })
 
   function beallit(event) {
-    const {value, name}=event.target
+    const { value, name } = event.target
 
-    if (name==="vnev") {
-      setTeljesnev({
-        vnev:value,
-        knev: teljesNev.knev
-      })
-    }else if (name==="knev") {
-      setTeljesnev({
-        vnev:teljesNev.vnev,
-        knev: value
-      })
-    }
+    steAdatok({
+      ...adatok,
+      [name]:value
+    })
+  }
 
+  function torol() {
+    steAdatok({ vnev: "", knev: "",email:"" })
   }
 
   return (
     <div className="container">
-      <h1>Szia {teljesNev.vnev} {teljesNev.knev} </h1>
+      <h1>Szia {adatok.vnev} {adatok.knev} </h1>
+      <p>{adatok.email}</p>
       <form>
         <input
           onChange={beallit}
           name="vnev"
           placeholder="Vezetéknév"
-          value={vnev} 
-          />
-        <input 
-        onChange={beallit}
-        name="knev" 
-        placeholder="Keresztnév"
-        value={teljesNev.knev} 
+          value={adatok.vnev}
         />
-        <button type="button">Töröl</button>
+        <input
+          onChange={beallit}
+          name="knev"
+          placeholder="Keresztnév"
+          value={adatok.knev}
+        />
+        <input
+          onChange={beallit}
+          name="email"
+          placeholder="e-mail"
+          value={adatok.email}
+        />
+        <button onClick={torol} type="button">Töröl</button>
       </form>
     </div>
   );
